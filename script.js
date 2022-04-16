@@ -1,255 +1,171 @@
-console.clear();
-
-const { gsap, imagesLoaded } = window;
-
-const buttons = {
-  prev: document.querySelector(".btn--left"),
-  next: document.querySelector(".btn--right"),
-};
-const cardsContainerEl = document.querySelector(".cards__wrapper");
-const appBgContainerEl = document.querySelector(".app__bg");
-
-const cardInfosContainerEl = document.querySelector(".info__wrapper");
-
-buttons.next.addEventListener("click", () => swapCards("right"));
-
-buttons.prev.addEventListener("click", () => swapCards("left"));
-
-function swapCards(direction) {
-  const currentCardEl = cardsContainerEl.querySelector(".current--card");
-  const previousCardEl = cardsContainerEl.querySelector(".previous--card");
-  const nextCardEl = cardsContainerEl.querySelector(".next--card");
-
-  const currentBgImageEl = appBgContainerEl.querySelector(".current--image");
-  const previousBgImageEl = appBgContainerEl.querySelector(".previous--image");
-  const nextBgImageEl = appBgContainerEl.querySelector(".next--image");
-
-  changeInfo(direction);
-  swapCardsClass();
-
-  removeCardEvents(currentCardEl);
-
-  function swapCardsClass() {
-    currentCardEl.classList.remove("current--card");
-    previousCardEl.classList.remove("previous--card");
-    nextCardEl.classList.remove("next--card");
-
-    currentBgImageEl.classList.remove("current--image");
-    previousBgImageEl.classList.remove("previous--image");
-    nextBgImageEl.classList.remove("next--image");
-
-    currentCardEl.style.zIndex = "50";
-    currentBgImageEl.style.zIndex = "-2";
-
-    if (direction === "right") {
-      previousCardEl.style.zIndex = "20";
-      nextCardEl.style.zIndex = "30";
-
-      nextBgImageEl.style.zIndex = "-1";
-
-      currentCardEl.classList.add("previous--card");
-      previousCardEl.classList.add("next--card");
-      nextCardEl.classList.add("current--card");
-
-      currentBgImageEl.classList.add("previous--image");
-      previousBgImageEl.classList.add("next--image");
-      nextBgImageEl.classList.add("current--image");
-    } else if (direction === "left") {
-      previousCardEl.style.zIndex = "30";
-      nextCardEl.style.zIndex = "20";
-
-      previousBgImageEl.style.zIndex = "-1";
-
-      currentCardEl.classList.add("next--card");
-      previousCardEl.classList.add("current--card");
-      nextCardEl.classList.add("previous--card");
-
-      currentBgImageEl.classList.add("next--image");
-      previousBgImageEl.classList.add("current--image");
-      nextBgImageEl.classList.add("previous--image");
-    }
-  }
-}
-
-function changeInfo(direction) {
-  let currentInfoEl = cardInfosContainerEl.querySelector(".current--info");
-  let previousInfoEl = cardInfosContainerEl.querySelector(".previous--info");
-  let nextInfoEl = cardInfosContainerEl.querySelector(".next--info");
-
-  gsap.timeline()
-    .to([buttons.prev, buttons.next], {
-    duration: 0.2,
-    opacity: 0.5,
-    pointerEvents: "none",
-  })
-    .to(
-    currentInfoEl.querySelectorAll(".text"),
-    {
-      duration: 0.4,
-      stagger: 0.1,
-      translateY: "-120px",
-      opacity: 0,
-    },
-    "-="
-  )
-    .call(() => {
-    swapInfosClass(direction);
-  })
-    .call(() => initCardEvents())
-    .fromTo(
-    direction === "right"
-    ? nextInfoEl.querySelectorAll(".text")
-    : previousInfoEl.querySelectorAll(".text"),
-    {
-      opacity: 0,
-      translateY: "40px",
-    },
-    {
-      duration: 0.4,
-      stagger: 0.1,
-      translateY: "0px",
-      opacity: 1,
-    }
-  )
-    .to([buttons.prev, buttons.next], {
-    duration: 0.2,
-    opacity: 1,
-    pointerEvents: "all",
-  });
-
-  function swapInfosClass() {
-    currentInfoEl.classList.remove("current--info");
-    previousInfoEl.classList.remove("previous--info");
-    nextInfoEl.classList.remove("next--info");
-
-    if (direction === "right") {
-      currentInfoEl.classList.add("previous--info");
-      nextInfoEl.classList.add("current--info");
-      previousInfoEl.classList.add("next--info");
-    } else if (direction === "left") {
-      currentInfoEl.classList.add("next--info");
-      nextInfoEl.classList.add("previous--info");
-      previousInfoEl.classList.add("current--info");
-    }
-  }
-}
-
-function updateCard(e) {
-  const card = e.currentTarget;
-  const box = card.getBoundingClientRect();
-  const centerPosition = {
-    x: box.left + box.width / 2,
-    y: box.top + box.height / 2,
-  };
-  let angle = Math.atan2(e.pageX - centerPosition.x, 0) * (35 / Math.PI);
-  gsap.set(card, {
-    "--current-card-rotation-offset": `${angle}deg`,
-  });
-  const currentInfoEl = cardInfosContainerEl.querySelector(".current--info");
-  gsap.set(currentInfoEl, {
-    rotateY: `${angle}deg`,
-  });
-}
-
-function resetCardTransforms(e) {
-  const card = e.currentTarget;
-  const currentInfoEl = cardInfosContainerEl.querySelector(".current--info");
-  gsap.set(card, {
-    "--current-card-rotation-offset": 0,
-  });
-  gsap.set(currentInfoEl, {
-    rotateY: 0,
-  });
-}
-
-function initCardEvents() {
-  const currentCardEl = cardsContainerEl.querySelector(".current--card");
-  currentCardEl.addEventListener("pointermove", updateCard);
-  currentCardEl.addEventListener("pointerout", (e) => {
-    resetCardTransforms(e);
-  });
-}
-
-initCardEvents();
-
-function removeCardEvents(card) {
-  card.removeEventListener("pointermove", updateCard);
-}
-
-function init() {
-
-  let tl = gsap.timeline();
-
-  tl.to(cardsContainerEl.children, {
-    delay: 0.15,
-    duration: 0.5,
-    stagger: {
-      ease: "power4.inOut",
-      from: "right",
-      amount: 0.1,
-    },
-    "--card-translateY-offset": "0%",
-  })
-    .to(cardInfosContainerEl.querySelector(".current--info").querySelectorAll(".text"), {
-    delay: 0.5,
-    duration: 0.4,
-    stagger: 0.1,
-    opacity: 1,
-    translateY: 0,
-  })
-    .to(
-    [buttons.prev, buttons.next],
-    {
-      duration: 0.4,
-      opacity: 1,
-      pointerEvents: "all",
-    },
-    "-=0.4"
-  );
-}
-
-const waitForImages = () => {
-  const images = [...document.querySelectorAll("img")];
-  const totalImages = images.length;
-  let loadedImages = 0;
-  const loaderEl = document.querySelector(".loader span");
-
-  gsap.set(cardsContainerEl.children, {
-    "--card-translateY-offset": "100vh",
-  });
-  gsap.set(cardInfosContainerEl.querySelector(".current--info").querySelectorAll(".text"), {
-    translateY: "40px",
-    opacity: 0,
-  });
-  gsap.set([buttons.prev, buttons.next], {
-    pointerEvents: "none",
-    opacity: "0",
-  });
-
-  images.forEach((image) => {
-    imagesLoaded(image, (instance) => {
-      if (instance.isComplete) {
-        loadedImages++;
-        let loadProgress = loadedImages / totalImages;
-
-        gsap.to(loaderEl, {
-          duration: 1,
-          scaleX: loadProgress,
-          backgroundColor: `hsl(${loadProgress * 120}, 100%, 50%`,
-        });
-
-        if (totalImages == loadedImages) {
-          gsap.timeline()
-            .to(".loading__wrapper", {
-            duration: 0.8,
-            opacity: 0,
-            pointerEvents: "none",
-          })
-            .call(() => init());
+document.addEventListener("DOMContentLoaded", function(e){
+    var body = document.querySelector("body");
+    var section = document.querySelector("section");
+    var articleLotto = document.querySelector(".lotto");
+    var articleBalls = document.querySelector(".balls");
+    var numbers = [];
+    var balls = document.getElementsByClassName("ball");
+    var drawnNums = [];
+    var chosenByMachine = [];
+    function createNumberBoard(number){
+    	console.log("I work");
+        var board = document.createElement("div");
+        board.classList.add("board");
+        articleLotto.appendChild(board);
+        for( var i = 0; i<number; i ++){
+            var boardEl = document.createElement("button");
+            boardEl.classList.add("boardEl");
+            board.appendChild(boardEl);
         }
-      }
-    });
-  });
-};
+        var boardEls = document.getElementsByClassName("boardEl");
+        for( var i =0; i<boardEls.length; i++){
+            boardEls[i].setAttribute("data-number", i+1);
+            var dataNumber = boardEls[i].getAttribute("data-number");
+            var number = parseInt(dataNumber, 10);
+            numbers.push(number);
+            boardEls[i].textContent = number;
+        }
+    }
+    createNumberBoard(49); 
 
-waitForImages();
+    var board = document.querySelector(".board");
+    var boardEls = document.querySelectorAll(".boardEl");
+    function drawNumbers(){
+        //boardEls.forEach(boardEl => boardEl.addEventListener("click", selectNums));
+        for (var i = 0; i<boardEls.length; i++){
+        	boardEls[i].addEventListener("click", selectNums);
+        }
+        function selectNums(){
+            var number = parseInt(this.dataset.number, 10);
+            if(this.hasAttribute("data-number")){
+                drawnNums.push(number);
+                this.removeAttribute("data-number");
+                this.classList.add("crossedOut");
+            } 
+            if(drawnNums.length=== 6){
+                //boardEls.forEach( boardEl => boardEl.removeAttribute("data-number")); 
+
+                //boardEls.forEach(boardEl => boardEl.addEventListener("click", makeAlert));
+                for ( var i = 0; i<boardEls.length; i++){
+                	boardEls[i].removeAttribute("data-number");
+                	boardEls[i].addEventListener("click", makeAlert);
+                }
+                var startDraw = document.querySelector(".startDraw");
+                if(startDraw === null){ // you have to prevent creating the button if it is already there!
+                    createButtonForMachineDraw();
+                } else {
+                    return;
+                }
+                
+
+            }
+            
+        }
+        
+        return drawnNums;
+
+    }
+    drawNumbers();
+
+    function makeAlert() {
+    	var alertBox = document.createElement("div");
+    	board.appendChild(alertBox);
+    	alertBox.classList.add("alertBox");
+    	alertBox.textContent = "you already chose 6!";
+    	
+    	setTimeout(function() {
+    		alertBox.parentNode.removeChild(alertBox);
+    	}, 1500);
+    	
+    }
+
+    function machineDraw(){
+        for( var i =0; i<6; i++){
+            var idx = Math.floor(Math.random() * numbers.length)
+            chosenByMachine.push(numbers[idx]);
+            /*a very important line of code which prevents machine from drawing the same number again 
+             */
+            numbers.splice(idx,1); 
+            console.log(numbers)
+            /*this line of code allows to check if numbers are taken out*/
+        }
+        var btnToRemove = document.querySelector(".startDraw");
+        
+        btnToRemove.classList.add("invisible"); 
+        /* why not remove it entirely? because it might then be accidentally created if for some reason you happen to try to click on board!!! and you may do that*/
+        return chosenByMachine;
+
+    }
+    //machineDraw();
+
+    function createButtonForMachineDraw(){
+    	var startDraw = document.createElement("button");
+    	startDraw.classList.add("startDraw");
+    	section.appendChild(startDraw);
+    	startDraw.textContent ="release the balls";
+    	startDraw.addEventListener("click", machineDraw);
+    	startDraw.addEventListener("click", compareArrays);
+    	
+    }
+
+    function compareArrays(){     
+        for( var i =0; i<balls.length; i++) {
+            balls[i].textContent = chosenByMachine[i];
+            (function() {
+            	var j = i;
+            	var f = function(){
+            		balls[j].classList.remove("invisible");
+            	}
+            	setTimeout(f, 1000*(j+1));
+            })();           
+        }
+        var common =[];
+        var arr1 = chosenByMachine;
+        var arr2 = drawnNums;
+            for(var i = 0; i<arr1.length; i++){
+                for(var j= 0; j<arr2.length; j++){
+                    if(arr1[i]===arr2[j]){ 
+                        common.push(arr1[i]);
+                    }
+                }
+            }
+            console.log(arr1, arr2, common); /* you can monitor your arrays in console*/
+            function generateResult(){
+                var resultsBoard = document.createElement("article");
+                section.appendChild(resultsBoard);
+                var paragraph = document.createElement("p");
+                resultsBoard.appendChild(paragraph);
+                resultsBoard.classList.add("resultsBoard");
+                resultsBoard.classList.add("invisible");
+                if( common.length===0){
+                    paragraph.textContent ="Oh, dear!  " + common.length + " balls and zero cash ";
+                } else if( common.length >0 && common.length< 3){
+                    paragraph.textContent ="Outta luck, only " + common.length + " , still no cash ";
+                } else if(common.length ===3) {
+                    paragraph.textContent ="Not bad, " + common.length + " , here's your twenty ";
+                } else if(common.length ===4){
+                    paragraph.textContent ="Not bad, " + common.length + " , here's your hundred ";
+                } else if( common.length ===5){
+                    paragraph.textContent ="Not bad, " + common.length + " , here's your thousand ";
+                }
+                else if(common.length===6){
+                    paragraph.textContent ="A true winner " + common.length + " here's your million";
+                }
+            }
+        setTimeout(function() {
+        	makeComebackBtn();
+        	document.querySelector(".resultsBoard").classList.remove("invisible"); //well, you cannot acces this outside the code
+        }, 8000);
+        generateResult();       
+    }
+    
+    function makeComebackBtn(){
+        var comebackBtn = document.createElement("a");
+        comebackBtn.classList.add("comebackBtn");
+        section.appendChild(comebackBtn);
+        comebackBtn.textContent ="again"
+        comebackBtn.setAttribute("href", "https://ewagrela.github.io/lottoIE/");
+    }
+    
+
+})
