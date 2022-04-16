@@ -1,101 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!--
-      This is the page head - it contains info the browser uses to display the page
-      You won't see what's in the head in the page
-      Scroll down to the body element for the page content
-    -->
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="https://glitch.com/favicon.ico" />
-
-    <!-- 
-      This is an HTML comment
-      You can write text in a comment and the content won't be visible in the page
-    -->
-
-    <title>Hello World!</title>
-
-    <!-- Meta tags for SEO and social sharing -->
-    <link rel="canonical" href="https://glitch-hello-website.glitch.me/" />
-    <meta
-      name="description"
-      content="A simple website, built with Glitch. Remix it to get your own."
-    />
-    <meta name="robots" content="index,follow" />
-    <meta property="og:title" content="Hello World!" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://glitch-hello-website.glitch.me/" />
-    <meta
-      property="og:description"
-      content="A simple website, built with Glitch. Remix it to get your own."
-    />
-    <meta
-      property="og:image"
-      content="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2Fhello-website-social.png?v=1616712748147"
-    />
-    <meta name="twitter:card" content="summary" />
-
-    <!-- Import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css" />
-
-    <!-- Import the webpage's javascript file -->
+    <body>
     <script src="/script.js" defer></script>
-  </head>
-  <body>
-    <!--
-      This is the body of the page
-      Look at the elements and see how they appear in the rendered page on the right
-      Each element is defined using tags, with < and > indicating where each one opens and closes
-      There are elements for sections of the page, images, text, and more
-      The elements include attributes referenced in the CSS for the page style
-    -->
+  <div class="app">
+  <div class="cardList">
+    <button class="cardList__btn btn btn--left">
+      <div class="icon">
+        <svg>
+          <use xlink:href="#arrow-left"></use>
+        </svg>
+      </div>
+    </button>
 
-    <!-- The wrapper and content divs set margins and positioning -->
-    <div class="wrapper">
-      <div class="content" role="main">
-        <!-- This is the start of content for our page -->
-        <h1 class="title">Hello World!</h1>
+    <div class="cards__wrapper">
+      <div class="card current--card">
+        <div class="card__image">
+          <img src="https://source.unsplash.com/Z8dtTatMVMw" alt="" />
+        </div>
+      </div>
 
-        <img
-          src="https://cdn.glitch.com/a9975ea6-8949-4bab-addb-8a95021dc2da%2Fillustration.svg?v=1618177344016"
-          class="illustration"
-          alt="Editor illustration"
-          title="Click the image!"
-        />
-        <!-- Instructions on using this project -->
-        <div class="instructions">
-          <h2>
-            Using this project
-          </h2>
-          <p>
-            This is the Glitch <strong>Hello Website</strong> project. You can
-            use it to build your own site. Check out README.md in the editor for
-            more info and next steps you can take!
-          </p>
-          <!-- ADD BUTTON HERE -->
-          
-          <!-- Once you've added the button from the readme, click it in the page -->
-          <!-- Check out the function in script.js to see how it works -->
+      <div class="card next--card">
+        <div class="card__image">
+          <img src="https://source.unsplash.com/9dmycbFE7mQ" alt="" />
+        </div>
+      </div>
+
+      <div class="card previous--card">
+        <div class="card__image">
+          <img src="https://source.unsplash.com/m7K4KzL5aQ8" alt="" />
         </div>
       </div>
     </div>
-    <!-- The footer holds our remix button — you can use it for structure or cut it out ✂ -->
-    <footer class="footer">
-      <div class="links"></div>
-      <a
-        class="btn--remix"
-        target="_top"
-        href="https://glitch.com/edit/#!/remix/glitch-hello-website"
-      >
-        <img
-          src="https://cdn.glitch.com/605e2a51-d45f-4d87-a285-9410ad350515%2FLogo_Color.svg?v=1618199565140"
-          alt=""
-        />
-        Remix on Glitch
-      </a>
-    </footer>
-  </body>
+
+    <button class="cardList__btn btn btn--right">
+      <div class="icon">
+        <svg>
+          <use xlink:href="#arrow-right"></use>
+        </svg>
+      </div>
+    </button>
+  </div>
+
+  <div class="infoList">
+    <div class="info__wrapper">
+      <div class="info current--info">
+        <h1 class="text name">Highlands</h1>
+        <h4 class="text location">Scotland</h4>
+        <p class="text description">The mountains are calling</p>
+      </div>
+
+      <div class="info next--info">
+        <h1 class="text name">Machu Pichu</h1>
+        <h4 class="text location">Peru</h4>
+        <p class="text description">Adventure is never far away</p>
+      </div>
+
+      <div class="info previous--info">
+        <h1 class="text name">Chamonix</h1>
+        <h4 class="text location">France</h4>
+        <p class="text description">Let your dreams come true</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="app__bg">
+    <div class="app__bg__image current--image">
+      <img src="https://source.unsplash.com/Z8dtTatMVMw" alt="" />
+    </div>
+    <div class="app__bg__image next--image">
+      <img src="https://source.unsplash.com/9dmycbFE7mQ" alt="" />
+    </div>
+    <div class="app__bg__image previous--image">
+      <img src="https://source.unsplash.com/m7K4KzL5aQ8" alt="" />
+    </div>
+  </div>
+</div>
+
+<div class="loading__wrapper">
+  <div class="loader--text">Loading...</div>
+  <div class="loader">
+    <span></span>
+  </div>
+</div>
+
+
+<svg class="icons" style="display: none;">
+  <symbol id="arrow-left" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512">
+    <polyline points="328 112 184 256 328 400"
+           style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px"/>
+  </symbol>
+  <symbol id="arrow-right" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512">
+    <polyline points="184 112 328 256 184 400"
+           style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px"/>
+  </symbol>
+</svg>
+
+
+
+
+
+
+
+
+
+
+
+<div class="support">
+  <a href="https://twitter.com/DevLoop01" target="_blank"><i class="fab fa-twitter-square"></i></a>
+  <a href="https://dribbble.com/devloop01" target="_blank"><i class="fab fa-dribbble"></i></a>
+</div> 
+</body>
+</head>
 </html>
