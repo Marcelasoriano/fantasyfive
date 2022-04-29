@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             boardEls[i].textContent = number;
         }
     }
-    createNumberBoard(49); 
+    createNumberBoard(39); 
 
     var board = document.querySelector(".board");
     var boardEls = document.querySelectorAll(".boardEl");
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function(e){
                 this.removeAttribute("data-number");
                 this.classList.add("crossedOut");
             } 
-            if(drawnNums.length=== 6){
+            if(drawnNums.length=== 5){
                 //boardEls.forEach( boardEl => boardEl.removeAttribute("data-number")); 
 
                 //boardEls.forEach(boardEl => boardEl.addEventListener("click", makeAlert));
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     	var alertBox = document.createElement("div");
     	board.appendChild(alertBox);
     	alertBox.classList.add("alertBox");
-    	alertBox.textContent = "you already chose 6!";
+    	alertBox.textContent = "already picked 5!";
     	
     	setTimeout(function() {
     		alertBox.parentNode.removeChild(alertBox);
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     }
 
     function machineDraw(){
-        for( var i =0; i<6; i++){
+        for( var i =0; i<5; i++){
             var idx = Math.floor(Math.random() * numbers.length)
             chosenByMachine.push(numbers[idx]);
             /*a very important line of code which prevents machine from drawing the same number again 
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     	var startDraw = document.createElement("button");
     	startDraw.classList.add("startDraw");
     	section.appendChild(startDraw);
-    	startDraw.textContent ="release the balls";
+    	startDraw.textContent ="draw";
     	startDraw.addEventListener("click", machineDraw);
     	startDraw.addEventListener("click", compareArrays);
     	
@@ -138,18 +138,16 @@ document.addEventListener("DOMContentLoaded", function(e){
                 resultsBoard.classList.add("resultsBoard");
                 resultsBoard.classList.add("invisible");
                 if( common.length===0){
-                    paragraph.textContent ="Oh, dear!  " + common.length + " balls and zero cash ";
+                    paragraph.textContent ="Oh no!  " + common.length + " balls and zero cash ";
                 } else if( common.length >0 && common.length< 3){
                     paragraph.textContent ="Outta luck, only " + common.length + " , still no cash ";
                 } else if(common.length ===3) {
-                    paragraph.textContent ="Not bad, " + common.length + " , here's your twenty ";
+                    paragraph.textContent ="Not too bad, " + common.length + " , here's your twenty ";
                 } else if(common.length ===4){
-                    paragraph.textContent ="Not bad, " + common.length + " , here's your hundred ";
-                } else if( common.length ===5){
-                    paragraph.textContent ="Not bad, " + common.length + " , here's your thousand ";
+                    paragraph.textContent ="Not too bad, " + common.length + " , here's your hundred ";
                 }
-                else if(common.length===6){
-                    paragraph.textContent ="A true winner " + common.length + " here's your million";
+                else if(common.length===5){
+                    paragraph.textContent ="Congrats! You won! " + common.length + " here's your $250,000 ";
                 }
             }
         setTimeout(function() {
@@ -164,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         comebackBtn.classList.add("comebackBtn");
         section.appendChild(comebackBtn);
         comebackBtn.textContent ="again"
-        comebackBtn.setAttribute("href", "https://ewagrela.github.io/lottoIE/");
+        
     }
     
 
