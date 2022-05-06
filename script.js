@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         comebackBtn.classList.add("comebackBtn");
         section.appendChild(comebackBtn);
         comebackBtn.textContent ="again"
-        comebackBtn.setAttribute("href", "");
+        comebackBtn.setAttribute("href", "https://www.google.com/");
     }
     
 
