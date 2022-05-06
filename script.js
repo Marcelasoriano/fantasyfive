@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function(e){
                 	boardEls[i].addEventListener("click", makeAlert);
                 }
                 var startDraw = document.querySelector(".startDraw");
-                if(startDraw === null){ 
+                if(startDraw === null){ // you have to prevent creating the button if it is already there!
                     createButtonForMachineDraw();
                 } else {
                     return;
@@ -83,15 +83,16 @@ document.addEventListener("DOMContentLoaded", function(e){
         for( var i =0; i<5; i++){
             var idx = Math.floor(Math.random() * numbers.length)
             chosenByMachine.push(numbers[idx]);
-            /*prevents machine from drawing the same number again 
+            /*a very important line of code which prevents machine from drawing the same number again 
              */
             numbers.splice(idx,1); 
             console.log(numbers)
-            /*check if numbers are taken out*/
+            /*this line of code allows to check if numbers are taken out*/
         }
         var btnToRemove = document.querySelector(".startDraw");
         
-        btnToRemove.classList.add("invisible");
+        btnToRemove.classList.add("invisible"); 
+        /* why not remove it entirely? because it might then be accidentally created if for some reason you happen to try to click on board!!! and you may do that*/
         return chosenByMachine;
 
     }
@@ -160,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         var comebackBtn = document.createElement("a");
         comebackBtn.classList.add("comebackBtn");
         section.appendChild(comebackBtn);
-        comebackBtn.textContent ="again"
+        comebackBtn.textContent ="try again"
         
     }
     
