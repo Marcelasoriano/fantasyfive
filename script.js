@@ -158,13 +158,14 @@ document.addEventListener("DOMContentLoaded", function(e){
         generateResult();       
     }
     
-    function makeComebackBtn(){
+   function makeComebackBtn(){
         var comebackBtn = document.createElement("a");
         comebackBtn.classList.add("comebackBtn");
         section.appendChild(comebackBtn);
         comebackBtn.textContent ="again"
-        comebackBtn.setAttribute("href", "https://www.google.com/");
+        comebackBtn.setAttribute("href", "https://ewagrela.github.io/lottoIE/");
     }
     
 
 })
+    
