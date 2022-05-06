@@ -148,8 +148,9 @@ document.addEventListener("DOMContentLoaded", function(e){
                 }
                 else if(common.length===5){
                     paragraph.textContent ="Congrats! You won! " + common.length + " here's your $250,000 ";
-                }
+                     }
             }
+      
         setTimeout(function() {
         	makeComebackBtn();
         	document.querySelector(".resultsBoard").classList.remove("invisible"); //well, you cannot acces this outside the code
@@ -161,8 +162,8 @@ document.addEventListener("DOMContentLoaded", function(e){
         var comebackBtn = document.createElement("a");
         comebackBtn.classList.add("comebackBtn");
         section.appendChild(comebackBtn);
-        comebackBtn.textContent ="try again"
-        
+        comebackBtn.textContent ="again"
+        comebackBtn.setAttribute("href", "https://ewagrela.github.io/lottoIE/");
     }
     
 
