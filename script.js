@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         for( var i =0; i<5; i++){
             var idx = Math.floor(Math.random() * numbers.length)
             chosenByMachine.push(numbers[idx]);
-            /*prevents machine from drawing same number again 
+            /*prevents machine from drawing the same number again 
              */
             numbers.splice(idx,1); 
             console.log(numbers)
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         }
         var btnToRemove = document.querySelector(".startDraw");
         
-        btnToRemove.classList.add("invisible"); 
+        btnToRemove.classList.add("invisible");
         return chosenByMachine;
 
     }
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function(e){
                     }
                 }
             }
-            console.log(arr1, arr2, common); /* monitor arrays in console*/
+            console.log(arr1, arr2, common); /* you can monitor your arrays in console*/
             function generateResult(){
                 var resultsBoard = document.createElement("article");
                 section.appendChild(resultsBoard);
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             }
         setTimeout(function() {
         	makeComebackBtn();
-        	document.querySelector(".resultsBoard").classList.remove("invisible"); // acces this outside the code
+        	document.querySelector(".resultsBoard").classList.remove("invisible"); //well, you cannot acces this outside the code
         }, 8000);
         generateResult();       
     }
