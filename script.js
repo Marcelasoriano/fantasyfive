@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     	var alertBox = document.createElement("div");
     	board.appendChild(alertBox);
     	alertBox.classList.add("alertBox");
-    	alertBox.textContent = "you already chose 5!";
+    	alertBox.textContent = "already picked 5!";
     	
     	setTimeout(function() {
     		alertBox.parentNode.removeChild(alertBox);
@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         var btnToRemove = document.querySelector(".startDraw");
         
         btnToRemove.classList.add("invisible"); 
+        /* why not remove it entirely? because it might then be accidentally created if for some reason you happen to try to click on board!!! and you may do that*/
         return chosenByMachine;
 
     }
@@ -101,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     	var startDraw = document.createElement("button");
     	startDraw.classList.add("startDraw");
     	section.appendChild(startDraw);
-    	startDraw.textContent ="release the balls";
+    	startDraw.textContent ="draw";
     	startDraw.addEventListener("click", machineDraw);
     	startDraw.addEventListener("click", compareArrays);
     	
@@ -137,17 +138,19 @@ document.addEventListener("DOMContentLoaded", function(e){
                 resultsBoard.classList.add("resultsBoard");
                 resultsBoard.classList.add("invisible");
                 if( common.length===0){
-                    paragraph.textContent ="Oh, dear!  " + common.length + " balls and zero cash ";
+                    paragraph.textContent ="Oh no!  " + common.length + " balls and zero cash ";
                 } else if( common.length >0 && common.length< 3){
                     paragraph.textContent ="Outta luck, only " + common.length + " , still no cash ";
                 } else if(common.length ===3) {
-                    paragraph.textContent ="Not bad, " + common.length + " , here's your twenty ";
+                    paragraph.textContent ="Not too bad, " + common.length + " , here's your twenty ";
                 } else if(common.length ===4){
-                    paragraph.textContent ="Not bad, " + common.length + " , here's your hundred ";
-                } else if( common.length ===5){
-                    paragraph.textContent ="Not bad, " + common.length + " , here's your thousand ";
+                    paragraph.textContent ="Not too bad, " + common.length + " , here's your hundred ";
                 }
+                else if(common.length===5){
+                    paragraph.textContent ="Congrats! You won! " + common.length + " here's your $250,000 ";
+                     }
             }
+      
         setTimeout(function() {
         	makeComebackBtn();
         	document.querySelector(".resultsBoard").classList.remove("invisible"); //well, you cannot acces this outside the code
@@ -155,13 +158,13 @@ document.addEventListener("DOMContentLoaded", function(e){
         generateResult();       
     }
     
-    function makeComebackBtn(){
+function makeComebackBtn(){
         var comebackBtn = document.createElement("a");
         comebackBtn.classList.add("comebackBtn");
         section.appendChild(comebackBtn);
         comebackBtn.textContent ="again"
-        comebackBtn.setAttribute("href", "");
+        comebackBtn.setAttribute("href", "https://github.com/Marcelasoriano/fantasyfive1/");
     }
-    
 
 })
+    
